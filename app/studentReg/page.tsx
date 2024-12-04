@@ -1,35 +1,140 @@
 "use client"
 import React from 'react'
 import Link from 'next/link';
+import { useState } from 'react';
 
 const Page = () => {
-  return (
-    <form  style={{ maxWidth: "420px", margin: "50px auto", padding: "25px", border: "1px solid #ccc", borderRadius: "10px"}}>
-      <h3 style={{ marginBottom: "15px", display:"flex", justifyContent:"center"}}>Register for student <Link href={"./register"}>/tutior</Link></h3>
-      <div style={{ marginBottom: "15px" }}>
-        <label htmlFor= "userName" style={{ display: "flex", marginBottom: "5px"}}>Name :</label>
-        <input type='text' placeholder='Enter your name' id='userName'
-                    style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" ,color:"black"}}/>
-      </div>
-      <div style={{ marginBottom: "15px" }}>
-      <label htmlFor= "email" style={{ display: "flex", marginBottom: "5px"}}> email :</label>
-      <input type='email' placeholder='Enter your email' id='email'
-      style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" ,color:"black" }}/>
-      </div>
-      <div style={{ marginBottom: "15px" }}>
-      <label htmlFor= "pass" style={{ display: "flex", marginBottom: "5px"}}>Password :</label>
-      <input type='password' placeholder='Enter your password' id='pass'
-      style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" ,color:"black" }}/>
-      </div>
-      <div style={{ marginBottom: "15px" }}>
-      <label htmlFor= "con-pass" style={{ display: "flex", marginBottom: "5px"}}> Confirm password :</label>
-      <input type='password' placeholder='Enter your password' id='con-pass'
-      style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc",color:"black" }}/>
-      </div>
-      <button>Submit</button>
-  
-    </form>
-  )
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const [error, setError] = useState<string | null>(null);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        const { username, email, password, confirmPassword } = formData;
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match!");
+            return;
+
+        }
+        setError(null)
+
+
+        console.log("Form submitted:", formData);
+
+        setError("");
+        setFormData({
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+        });
+    };
+
+    return (
+        <form 
+        onSubmit={handleSubmit} 
+        className="max-w-md mx-auto my-12 p-6 border border-gray-300 rounded-lg bg-[#74d9ed]"
+      >
+        <h3 className="mb-4 text-center text-lg font-bold">
+          Register for student{" "}
+          <Link href="./register" className="text-blue-600 underline">
+            /tutior
+          </Link>
+        </h3>
+      
+        <div className="mb-4">
+          <label
+            htmlFor="username"
+            className="block text-black mb-2 font-medium"
+          >
+            Name:
+          </label>
+          <input
+            name="username"
+            value={formData.username}
+            type="text"
+            placeholder="Enter your name"
+            id="username"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+      
+        <div className="mb-4">
+          <label
+            htmlFor="email"
+            className="block text-black mb-2 font-medium"
+          >
+            Email:
+          </label>
+          <input
+            name="email"
+            value={formData.email}
+            type="email"
+            placeholder="Enter your email"
+            id="email"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+      
+        <div className="mb-4">
+          <label
+            htmlFor="password"
+            className="block text-black mb-2 font-medium"
+          >
+            Password:
+          </label>
+          <input
+            name="password"
+            value={formData.password}
+            type="password"
+            placeholder="Enter your password"
+            id="password"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+      
+        <div className="mb-4">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-black mb-2 font-medium"
+          >
+            Confirm Password:
+          </label>
+          <input
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            type="password"
+            placeholder="Confirm your password"
+            id="confirmPassword"
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+      
+        <button 
+          type="submit" 
+          className="text-white bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-800"
+        >
+          Submit
+        </button>
+      
+        {error && <p className="mt-4 text-black">{error}</p>}
+      </form>
+      
+    )
 }
 
 export default Page;
