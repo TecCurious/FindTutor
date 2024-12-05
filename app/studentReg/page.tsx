@@ -123,13 +123,15 @@ const Page = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
           />
         </div>
-      
+      <div>
         <button 
           type="submit" 
           className="text-white bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-800"
         >
           Submit
         </button>
+        <p className=' text-black'>if you are already registered, please <span className=' text-blue-700'><Link href={"./loginPage"}>login</Link></span></p>
+  </div>
       
         {error && <p className="mt-4 text-black">{error}</p>}
       </form>
