@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 
 const loginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [error, setError] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -16,7 +16,7 @@ const loginPage: React.FC = () => {
 
     console.log('Logging in with:', { email, password });
     setError('');
-    alert('Login successful');
+    console.log('Login successful');
   };
 
   return (
